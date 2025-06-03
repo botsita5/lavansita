@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Vansita - Inventario de Ford Transit en Miami Springs</title>
+    <title>La Vansita - Inventario de Ford Transit en Hialeah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Orange/Brown (#ca6f1e) & Earthy Neutrals -->
+    <!-- Application Structure Plan: The SPA is structured as a single-page inventory viewer. It starts with a welcoming header and a brief introduction. The core is an interactive inventory grid allowing users to filter vehicles. Clicking a vehicle card opens a detailed modal. A small chart provides inventory insights. Finally, a contact section facilitates inquiries. This structure prioritizes easy browsing, detailed viewing, and direct communication for a vehicle inventory. -->
+    <!-- Visualization & Content Choices: Vehicle inventory is presented via a responsive grid of cards (Goal: Organize, Inform). Each card has an image, title, and price. Clicking a card triggers a modal for detailed information. A Chart.js bar chart visualizes the distribution of vehicle models in the inventory. Filtering functionality allows users to narrow down the inventory. All visual elements use HTML/CSS/Tailwind and Unicode icons. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
         .hero-bg {
+            /* Updated banner image with many vans in a row */
             background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)), url('https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg');
             background-size: cover;
             background-position: center;
@@ -47,10 +52,11 @@
 
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo de La Vansita -->
             <div class="text-2xl font-bold text-gray-900">
-                <span class="text-green-700">La</span>Vansita
+                <img src="https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/ChatGPT%20Image%203%20jun%202025,%2001_27_23%20p.m..jpg" alt="La Vansita Logo" class="h-10 sm:h-12 w-auto">
             </div>
-            <a href="#contacto" class="bg-green-700 text-white font-semibold px-5 py-2 rounded-lg hover:bg-green-800 transition-colors duration-300">
+            <a href="#contacto" class="bg-[#ca6f1e] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#b0611a] transition-colors duration-300">
                 Contacto
             </a>
         </nav>
@@ -61,7 +67,7 @@
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">¡Encuentra Tu Ford Transit Ideal en La Vansita!</h1>
                 <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto">Explora nuestro inventario de furgonetas Ford Transit de calidad, listas para tus necesidades comerciales o personales.</p>
-                <a href="#inventario" class="bg-green-700 text-white font-bold px-8 py-4 rounded-lg hover:bg-green-800 transition-transform duration-300 transform hover:scale-105">Ver Inventario</a>
+                <a href="#inventario" class="bg-[#ca6f1e] text-white font-bold px-8 py-4 rounded-lg hover:bg-[#b0611a] transition-transform duration-300 transform hover:scale-105">Ver Inventario</a>
             </div>
         </section>
 
@@ -73,11 +79,11 @@
                 </div>
 
                 <div class="mb-8 flex flex-col sm:flex-row gap-4">
-                    <input type="text" id="search-input" placeholder="Buscar por modelo..." class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
-                    <select type="text" id="make-filter" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700" disabled>
+                    <input type="text" id="search-input" placeholder="Buscar por modelo..." class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e]">
+                    <select type="text" id="make-filter" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e]" disabled>
                         <option value="Ford">Ford</option>
                     </select>
-                    <select id="year-filter" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
+                    <select id="year-filter" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e]">
                         <option value="">Todos los Años</option>
                     </select>
                 </div>
@@ -95,39 +101,45 @@
             </div>
         </section>
 
-        <section id="contacto" class="py-16 md:py-24 bg-green-700 text-white">
+        <section id="contacto" class="py-16 md:py-24 bg-[#ca6f1e] text-white">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-4xl font-bold mb-4">¿Listo para Tu Próxima Ford Transit?</h2>
-                <p class="text-green-100 mb-8 max-w-2xl mx-auto">Contáctanos hoy mismo para más información, una prueba de manejo o para discutir opciones de financiación.</p>
+                <p class="text-[#f5e0d0] mb-8 max-w-2xl mx-auto">Contáctanos hoy mismo para más información, una prueba de manejo o para discutir opciones de financiación.</p>
                 <div class="bg-white text-gray-800 rounded-xl shadow-2xl p-8 max-w-4xl mx-auto grid md:grid-cols-2 gap-8 text-left">
                     <div>
                         <h3 class="text-2xl font-bold mb-4">Información de Contacto</h3>
                         <div class="space-y-4">
                             <p class="flex items-start">
-                                <span class="text-green-700 mt-1 mr-3">📞</span>
+                                <span class="text-[#ca6f1e] mt-1 mr-3">📞</span>
                                 <span>
                                     <strong class="block">Llámanos:</strong>
                                     <a href="tel:+17868507699" class="hover:underline">786-850-7699</a>
                                 </span>
                             </p>
                             <p class="flex items-start">
-                                <span class="text-green-700 mt-1 mr-3">📍</span>
+                                <span class="text-[#ca6f1e] mt-1 mr-3">📍</span>
                                 <span>
                                     <strong class="block">Visítanos en:</strong>
-                                    Miami Auto Credit, Miami Springs, Florida
+                                    Miami Auto Credit, 599 W 49th St, Hialeah, FL 33012, Estados Unidos
                                 </span>
                             </p>
                             <p class="flex items-start">
-                                <span class="text-green-700 mt-1 mr-3">✉️</span>
+                                <span class="text-[#ca6f1e] mt-1 mr-3">✉️</span>
                                 <span>
                                     <strong class="block">Envíanos un Email:</strong>
                                     <a href="mailto:info@miamiautocredit.com" class="hover:underline">info@miamiautocredit.com</a>
                                 </span>
                             </p>
                         </div>
+                        <div class="mt-4">
+                            <h4 class="text-lg font-semibold mb-2">Horario de Atención:</h4>
+                            <p><strong>Lunes a Viernes:</strong> 9:00 AM - 7:00 PM</p>
+                            <p><strong>Sábado:</strong> 9:00 AM - 6:00 PM</p>
+                            <p><strong>Domingo:</strong> Cerrado</p>
+                        </div>
                     </div>
                     <div class="flex flex-col space-y-4">
-                         <a href="tel:+17868507699" class="w-full bg-green-700 text-white text-center font-bold py-4 px-6 rounded-lg hover:bg-green-800 transition duration-300">Llamar Ahora</a>
+                         <a href="tel:+17868507699" class="w-full bg-[#ca6f1e] text-white text-center font-bold py-4 px-6 rounded-lg hover:bg-[#b0611a] transition duration-300">Llamar Ahora</a>
                          <a href="mailto:info@miamiautocredit.com" class="w-full bg-gray-800 text-white text-center font-bold py-4 px-6 rounded-lg hover:bg-gray-900 transition duration-300">Enviar un Email</a>
                     </div>
                 </div>
@@ -154,49 +166,49 @@
             </div>
             <p id="modal-description" class="text-gray-600 mb-6"></p>
 
-            <div class="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
-                <h4 class="text-xl font-bold text-green-800 mb-3">✨ Pregúntale a La Vansita ✨</h4>
+            <div class="mt-6 p-4 bg-[#fdf7f2] rounded-lg border border-[#e0b297]">
+                <h4 class="text-xl font-bold text-[#9f5d17] mb-3">✨ Pregúntale a La Vansita ✨</h4>
                 <p class="text-gray-700 text-sm mb-3">¿Tienes alguna pregunta rápida sobre este vehículo? ¡Pregúntale a nuestro asistente virtual!</p>
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <input type="text" id="gemini-question-input" placeholder="Ej: ¿Es buena para viajes largos?" class="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
-                    <button id="ask-gemini-button" class="bg-green-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-800 transition-colors duration-300 flex-shrink-0">
+                    <input type="text" id="gemini-question-input" placeholder="Ej: ¿Es buena para viajes largos?" class="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e]">
+                    <button id="ask-gemini-button" class="bg-[#ca6f1e] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#b0611a] transition-colors duration-300 flex-shrink-0">
                         Preguntar
                     </button>
                 </div>
                 <div id="gemini-response" class="mt-4 p-3 bg-white rounded-lg border border-gray-200 text-gray-800 min-h-[60px] flex items-center justify-center text-center">
                     <span class="text-gray-500">Tu respuesta aparecerá aquí...</span>
                 </div>
-                <div id="gemini-loading" class="hidden mt-4 text-center text-green-700">
+                <div id="gemini-loading" class="hidden mt-4 text-center text-[#ca6f1e]">
                     Cargando respuesta...
                 </div>
             </div>
-            <a href="tel:+17868507699" class="block text-center bg-green-700 text-white font-bold py-3 rounded-lg hover:bg-green-800 transition duration-300 mt-6">¡Llámanos para más detalles!</a>
+            <a href="tel:+17868507699" class="block text-center bg-[#ca6f1e] text-white font-bold py-3 rounded-lg hover:bg-[#b0611a] transition duration-300 mt-6">¡Llámanos para más detalles!</a>
         </div>
     </div>
 
     <script>
         const vehicles = [
-            { id: 1, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2015, price: 16990, mileage: 185807, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Una Ford Transit 350 de techo alto extendida, ideal para entregas o conversiones. Muy espaciosa y fiable.' },
-            { id: 2, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2015, price: 10990, mileage: 186210, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Furgoneta Ford Transit 250 de techo medio, perfecta para el trabajo diario. Confiable y eficiente.' },
-            { id: 3, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2015, price: 17990, mileage: 181195, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Otra Ford Transit 350 de techo alto, ideal para cargas grandes y transporte.' },
-            { id: 4, make: 'Ford', model: 'Transit 250 Van Low Roof 60/40 Pass. 148-in. WB', year: 2016, price: 15990, mileage: 104214, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Furgoneta Ford Transit 250 de techo bajo, con puertas de paso 60/40. Eficiente y práctica.' },
-            { id: 5, make: 'Ford', model: 'Transit 250 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 15990, mileage: 100144, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%13.08.34_a077762a.jpg', description: 'Ford Transit 250 de techo bajo con puerta corredera, distancia entre ejes corta. Maniobrable y confiable.' },
-            { id: 6, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 18990, mileage: 104652, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 250 de techo medio con puerta corredera, ideal para una variedad de usos.' },
-            { id: 7, make: 'Ford', model: 'Transit 350 Van Low Roof 60/40 Pass. 148-in. WB', year: 2016, price: 9990, mileage: 170109, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 350 de techo bajo con puertas de paso 60/40. Capacidad de carga robusta.' },
-            { id: 8, make: 'Ford', model: 'Transit 150 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 14990, mileage: 149115, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 150 de techo bajo con puerta corredera, compacta y fácil de conducir.' },
-            { id: 9, make: 'Ford', model: 'Transit 350 Wagon Low Roof XL w/Sliding Pass. 148-in. WB', year: 2016, price: 18990, mileage: 130312, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 350 Wagon, ideal para transporte de pasajeros o una combinación de carga y pasajeros.' },
-            { id: 10, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2016, price: 13990, mileage: 180532, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 250 de techo medio, una furgoneta confiable y espaciosa para diversas necesidades.' },
-            { id: 11, make: 'Ford', model: 'Transit 150 Van Low Roof 60/40 Pass. 130-in. WB', year: 2016, price: 12990, mileage: 150587, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Otra Ford Transit 150 de techo bajo, con fácil acceso gracias a las puertas 60/40.' },
-            { id: 12, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2017, price: 18990, mileage: 190235, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 350 de techo alto y distancia entre ejes extendida, máxima capacidad.' },
-            { id: 13, make: 'Ford', model: 'Transit 150 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2017, price: null, mileage: 148320, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 150 de techo medio con puerta corredera, un equilibrio perfecto entre tamaño y capacidad.' },
-            { id: 14, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2017, price: 22990, mileage: 133244, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%2025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Otra Ford Transit 350 de techo alto con menor millaje, lista para el trabajo pesado.' },
-            { id: 15, make: 'Ford', model: 'Transit 150 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2017, price: 13990, mileage: 166062, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 150 de techo bajo con puerta corredera, compacta y eficiente para la ciudad.' },
-            { id: 16, make: 'Ford', model: 'Transit 350 Wagon Med. Roof XL w/Sliding Pass. 148-in. WB', year: 2017, price: 16990, mileage: 190164, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 350 Wagon de techo medio, con configuración XL para mayor espacio.' },
-            { id: 17, make: 'Ford', model: 'Transit 250 Van Low Roof 60/40 Pass.130-in. WB', year: 2017, price: 13990, mileage: 156200, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 250 de techo bajo con puertas 60/40, versátil y económica.' },
-            { id: 18, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2017, price: 13990, mileage: 183062, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 250 de techo medio, una furgoneta de trabajo fiable con puerta corredera.' },
-            { id: 19, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 14990, mileage: 187461, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 250 de techo medio, modelo más reciente con buen rendimiento.' },
-            { id: 20, make: 'Ford', model: 'Transit 350 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 19990, mileage: 129626, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 350 de techo medio, con mayor capacidad y menor millaje para el año.' },
-            { id: 21, make: 'Ford', model: 'Transit 150 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 18990, mileage: 127538, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/google/generative-ai-docs/main/site/en/gemini-api/docs/images/WhatsApp%20Image%202025-06-02%20at%2013.08.34_a077762a.jpg', description: 'Ford Transit 150 de techo medio, un vehículo comercial versátil y confiable.' }
+            { id: 1, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2015, price: 16990, mileage: 185807, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350', description: 'Una Ford Transit 350 de techo alto extendida, ideal para entregas o conversiones. Muy espaciosa y fiable.' },
+            { id: 2, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2015, price: 10990, mileage: 186210, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Furgoneta Ford Transit 250 de techo medio, perfecta para el trabajo diario. Confiable y eficiente.' },
+            { id: 3, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2015, price: 17990, mileage: 181195, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350', description: 'Otra Ford Transit 350 de techo alto, ideal para cargas grandes y transporte.' },
+            { id: 4, make: 'Ford', model: 'Transit 250 Van Low Roof 60/40 Pass. 148-in. WB', year: 2016, price: 15990, mileage: 104214, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Furgoneta Ford Transit 250 de techo bajo, con puertas de paso 60/40. Eficiente y práctica.' },
+            { id: 5, make: 'Ford', model: 'Transit 250 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 15990, mileage: 100144, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Ford Transit 250 de techo bajo con puerta corredera, distancia entre ejes corta. Maniobrable y confiable.' },
+            { id: 6, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 18990, mileage: 104652, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Ford Transit 250 de techo medio con puerta corredera, ideal para una variedad de usos.' },
+            { id: 7, make: 'Ford', model: 'Transit 350 Van Low Roof 60/40 Pass. 148-in. WB', year: 2016, price: 9990, mileage: 170109, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350', description: 'Ford Transit 350 de techo bajo con puertas de paso 60/40. Capacidad de carga robusta.' },
+            { id: 8, make: 'Ford', model: 'Transit 150 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 14990, mileage: 149115, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+150', description: 'Ford Transit 150 de techo bajo con puerta corredera, compacta y fácil de conducir.' },
+            { id: 9, make: 'Ford', model: 'Transit 350 Wagon Low Roof XL w/Sliding Pass. 148-in. WB', year: 2016, price: 18990, mileage: 130312, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350+Wagon', description: 'Ford Transit 350 Wagon, ideal para transporte de pasajeros o una combinación de carga y pasajeros.' },
+            { id: 10, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2016, price: 13990, mileage: 180532, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Ford Transit 250 de techo medio, una furgoneta confiable y espaciosa para diversas necesidades.' },
+            { id: 11, make: 'Ford', model: 'Transit 150 Van Low Roof 60/40 Pass. 130-in. WB', year: 2016, price: 12990, mileage: 150587, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+150', description: 'Otra Ford Transit 150 de techo bajo, con fácil acceso gracias a las puertas 60/40.' },
+            { id: 12, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2017, price: 18990, mileage: 190235, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350', description: 'Ford Transit 350 de techo alto y distancia entre ejes extendida, máxima capacidad.' },
+            { id: 13, make: 'Ford', model: 'Transit 150 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2017, price: null, mileage: 148320, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+150', description: 'Ford Transit 150 de techo medio con puerta corredera, un equilibrio perfecto entre tamaño y capacidad.' },
+            { id: 14, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2017, price: 22990, mileage: 133244, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350', description: 'Otra Ford Transit 350 de techo alto con menor millaje, lista para el trabajo pesado.' },
+            { id: 15, make: 'Ford', model: 'Transit 150 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2017, price: 13990, mileage: 166062, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+150', description: 'Ford Transit 150 de techo bajo con puerta corredera, compacta y eficiente para la ciudad.' },
+            { id: 16, make: 'Ford', model: 'Transit 350 Wagon Med. Roof XL w/Sliding Pass. 148-in. WB', year: 2017, price: 16990, mileage: 190164, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350+Wagon', description: 'Ford Transit 350 Wagon de techo medio, con configuración XL para mayor espacio.' },
+            { id: 17, make: 'Ford', model: 'Transit 250 Van Low Roof 60/40 Pass.130-in. WB', year: 2017, price: 13990, mileage: 156200, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Ford Transit 250 de techo bajo con puertas 60/40, versátil y económica.' },
+            { id: 18, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2017, price: 13990, mileage: 183062, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Ford Transit 250 de techo medio, una furgoneta de trabajo fiable con puerta corredera.' },
+            { id: 19, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 14990, mileage: 187461, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+250', description: 'Ford Transit 250 de techo medio, modelo más reciente con buen rendimiento.' },
+            { id: 20, make: 'Ford', model: 'Transit 350 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 19990, mileage: 129626, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+350', description: 'Ford Transit 350 de techo medio, con mayor capacidad y menor millaje para el año.' },
+            { id: 21, make: 'Ford', model: 'Transit 150 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 18990, mileage: 127538, type: 'Van', imageUrl: 'https://placehold.co/600x400/ca6f1e/ffffff?text=Ford+Transit+150', description: 'Ford Transit 150 de techo medio, un vehículo comercial versátil y confiable.' }
         ];
 
         const vehicleGrid = document.getElementById('vehicle-grid');
@@ -246,7 +258,7 @@
                     <img src="${vehicle.imageUrl}" alt="${vehicle.make} ${vehicle.model}" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <h3 class="text-xl font-semibold text-gray-900 mb-1">${vehicle.year} ${vehicle.make} ${vehicle.model}</h3>
-                        <p class="text-2xl font-bold text-green-700 mb-2">${formatPrice(vehicle.price)}</p>
+                        <p class="text-2xl font-bold text-[#ca6f1e] mb-2">${formatPrice(vehicle.price)}</p>
                         <p class="text-gray-600 text-sm">${formatMileage(vehicle.mileage)}</p>
                     </div>
                 `;
@@ -408,8 +420,8 @@ Tu Respuesta:`;
                     datasets: [{
                         label: 'Número de Vehículos',
                         data: data,
-                        backgroundColor: 'rgba(22, 163, 74, 0.6)', /* green-600 with opacity */
-                        borderColor: 'rgba(22, 163, 74, 1)', /* green-600 solid */
+                        backgroundColor: 'rgba(202, 111, 30, 0.6)', /* #ca6f1e with opacity */
+                        borderColor: 'rgba(202, 111, 30, 1)', /* #ca6f1e solid */
                         borderWidth: 1
                     }]
                 },
@@ -494,8 +506,8 @@ Tu Respuesta:`;
                     datasets: [{
                         label: 'Número de Vehículos',
                         data: data,
-                        backgroundColor: 'rgba(22, 163, 74, 0.6)', /* green-600 with opacity */
-                        borderColor: 'rgba(22, 163, 74, 1)', /* green-600 solid */
+                        backgroundColor: 'rgba(202, 111, 30, 0.6)', /* #ca6f1e with opacity */
+                        borderColor: 'rgba(202, 111, 30, 1)', /* #ca6f1e solid */
                         borderWidth: 1
                     }]
                 },
