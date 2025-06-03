@@ -51,11 +51,11 @@
     </style>
 </head>
 <body class="bg-[#212f3d] text-gray-100">
-    <header class="bg-gray-900 shadow-sm sticky top-0 z-50">
+    <header class="bg-[#212f3d] shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Logo actualizado -->
-            <div class="text-2xl font-bold text-gray-900">
-                <img src="assets/logo.png" alt="La Vansita Logo" class="h-10 sm:h-12 w-auto">
+            <div class="text-2xl font-bold text-white">
+                <img src="assets/logo (2).png" alt="La Vansita Logo" class="h-10 sm:h-12 w-auto">
             </div>
             <a href="#contacto" class="bg-[#ca6f1e] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#b0611a] transition-colors duration-300">
                 Contacto
@@ -71,11 +71,11 @@
         </div>
     </section>
 
-    <!-- Modal de vehículo con imagen principal insertada -->
+    <!-- Modal de vehículo con imagen dinámica -->
     <div id="vehicle-modal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50">
-        <div class="bg-white text-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
-            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold">✖</button>
-            <img src="assets/vehiculo.png" alt="Imagen destacada del vehículo">
+        <div class="bg-[#212f3d] text-white rounded-lg shadow-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+            <button id="close-modal" onclick="document.getElementById('vehicle-modal').style.display='none'" class="absolute top-4 right-4 text-gray-400 hover:text-gray-200 text-2xl font-bold">✖</button>
+            <img id="modal-image" src="assets/vehiculo.png" alt="Imagen destacada del vehículo">
             <h3 id="modal-title" class="text-2xl font-bold mt-4 mb-2"></h3>
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <p><strong>Precio:</strong> <span id="modal-price"></span></p>
@@ -89,4 +89,3 @@
     </div>
 </body>
 </html>
-
