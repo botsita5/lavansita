@@ -7,14 +7,44 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Paleta de colores: Fondo principal #212f3d (azul-gris oscuro), acento #ca6f1e (naranja/marrón), y neutros complementarios. -->
+    <!-- Plan de estructura de la aplicación: La SPA está estructurada como un visor de inventario de una sola página. Comienza con un encabezado de bienvenida y una breve introducción. El núcleo es una cuadrícula de inventario interactiva que permite a los usuarios filtrar vehículos. Al hacer clic en la tarjeta de un vehículo, se abre un modal detallado. Un pequeño gráfico proporciona información sobre el inventario. Finalmente, una sección de contacto facilita las consultas. Esta estructura prioriza la navegación fácil, la visualización detallada y la comunicación directa para un inventario de vehículos. -->
+    <!-- Elecciones de visualización y contenido: El inventario de vehículos se presenta mediante una cuadrícula de tarjetas responsiva (Objetivo: Organizar, Informar). Cada tarjeta tiene una imagen, título y precio. Al hacer clic en una tarjeta, se activa un modal para obtener información detallada. Un gráfico de barras de Chart.js visualiza la distribución de los modelos de vehículos en el inventario. La funcionalidad de filtrado permite a los usuarios reducir el inventario. Todos los elementos visuales utilizan HTML/CSS/Tailwind e iconos Unicode. -->
+    <!-- CONFIRMACIÓN: NO se utilizan gráficos SVG. NO se utiliza Mermaid JS. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
         .hero-bg {
-            background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)), url('assets/banner.png');
+            /* Banner actualizado con la imagen proporcionada desde el repositorio de GitHub */
+            background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)), url('https://raw.githubusercontent.com/lavansita/lavansita/main/banner.png');
             background-size: cover;
             background-position: center;
+        }
+        .vehicle-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .vehicle-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.1), 0 3px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .modal {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
         }
     </style>
 </head>
@@ -22,8 +52,9 @@
 
     <header class="bg-gray-900 shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-white">
-                <img src="assets/logo%20(2).png" alt="La Vansita" class="h-10 sm:h-12 w-auto">
+            <!-- Logo de La Vansita -->
+            <div class="text-2xl font-bold text-gray-900">
+                <img src="https://raw.githubusercontent.com/lavansita/lavansita/main/logo%20(3).png" alt="La Vansita Logo" class="h-10 sm:h-12 w-auto">
             </div>
             <a href="#contacto" class="bg-[#ca6f1e] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#b0611a] transition-colors duration-300">
                 Contacto
@@ -36,80 +67,504 @@
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">¡Encuentra Tu Ford Transit Ideal en La Vansita!</h1>
                 <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto">Explora nuestro inventario de furgonetas Ford Transit de calidad, listas para tus necesidades comerciales o personales.</p>
-                <p class="text-md text-gray-300 mb-2">Dirección: <strong>3210 E 4th Ave, Hialeah, Florida 33013</strong></p>
-                <p class="text-md text-gray-300 mb-4">Preguntar por <strong>Greissy</strong></p>
                 <a href="#inventario" class="bg-[#ca6f1e] text-white font-bold px-8 py-4 rounded-lg hover:bg-[#b0611a] transition-transform duration-300 transform hover:scale-105">Ver Inventario</a>
             </div>
         </section>
 
-        <section id="inventario" class="py-12 px-6">
-            <div class="container mx-auto text-center">
-                <h2 class="text-3xl font-bold mb-6">Inventario disponible</h2>
-                <p class="text-gray-300 mb-8">3210 E 4th Ave, Hialeah, Florida 33013 - Preguntar por Greissy</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-gray-800 rounded-lg overflow-hidden shadow-md">
-                        <img src="assets/vehiculo.png" alt="Vehículo en venta" class="w-full h-48 object-cover">
-                        <div class="p-4 text-left">
-                            <h3 class="text-xl font-semibold text-white mb-2">Ford Transit T250 2018</h3>
-                            <p class="text-gray-300 mb-2">180,000 millas · Transmisión nueva</p>
-                            <p class="text-gray-400 mb-4">$15,000 cash con todo incluido</p>
-                            <p class="text-gray-500 text-sm">3210 E 4th Ave, Hialeah, FL 33013 · Preguntar por Greissy</p>
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 rounded-lg overflow-hidden shadow-md">
-                        <img src="assets/chevy-express-2020.png" alt="Chevrolet Express 2020" class="w-full h-48 object-cover">
-                        <div class="p-4 text-left">
-                            <h3 class="text-xl font-semibold text-white mb-2">Chevrolet Express 2500 Cargo 2020</h3>
-                            <p class="text-gray-300 mb-2">Motor 6.0L V8 · Ideal para trabajo pesado</p>
-                            <p class="text-gray-400 mb-4">Financiamiento desde $2,000 de Down Payment</p>
-                            <a href="https://miamiautocredit.net/vdp/22249682/Used-2020-Chevrolet-Express-2500-Cargo-for-sale-in-Hialeah-FL-33013" target="_blank" class="text-[#ca6f1e] underline">Ver detalles</a>
-                            <p class="text-gray-500 text-sm mt-2">3210 E 4th Ave, Hialeah, FL 33013 · Preguntar por Greissy</p>
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 rounded-lg overflow-hidden shadow-md">
-                        <img src="assets/chevy-express-2021.png" alt="Chevrolet Express 2021" class="w-full h-48 object-cover">
-                        <div class="p-4 text-left">
-                            <h3 class="text-xl font-semibold text-white mb-2">Chevrolet Express 2500 Cargo 2021</h3>
-                            <p class="text-gray-300 mb-2">Versión reciente · Excelente rendimiento</p>
-                            <p class="text-gray-400 mb-4">Financiamiento disponible</p>
-                            <a href="https://miamiautocredit.net/vdp/22249686/Used-2021-Chevrolet-Express-2500-Cargo-for-sale-in-Hialeah-FL-33013" target="_blank" class="text-[#ca6f1e] underline">Ver detalles</a>
-                            <p class="text-gray-500 text-sm mt-2">3210 E 4th Ave, Hialeah, FL 33013 · Preguntar por Greissy</p>
-                        </div>
-                    </div>
+        <section id="inventario" class="py-16 md:py-24 bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-100">Nuestro Inventario Actual de Ford Transit</h2>
+                    <p class="text-gray-300 mt-2">Descubre las furgonetas Ford Transit disponibles. Usa los filtros para encontrar lo que buscas.</p>
                 </div>
 
-                <div class="mt-10">
-                    <h3 class="text-2xl font-bold text-white mb-4">Agregar nuevos vehículos</h3>
-                    <p class="text-sm text-gray-400 mb-2">Envía los datos de nuevos vehículos aquí semanalmente y se añadirán:</p>
-                    <table class="table-auto w-full text-sm text-left text-gray-300 border border-gray-600">
-                        <thead class="bg-gray-700 text-white">
-                            <tr>
-                                <th class="px-4 py-2">Imagen</th>
-                                <th class="px-4 py-2">Modelo</th>
-                                <th class="px-4 py-2">Descripción</th>
-                                <th class="px-4 py-2">Precio / Financiación</th>
-                                <th class="px-4 py-2">Enlace</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="px-4 py-2">assets/transit-2019.png</td>
-                                <td class="px-4 py-2">Ford Transit 2019</td>
-                                <td class="px-4 py-2">135,000 millas · Excelente motor</td>
-                                <td class="px-4 py-2">Desde $1,500 de Down Payment</td>
-                                <td class="px-4 py-2"><a href="#" class="text-[#ca6f1e] underline">Ver detalles</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="mb-8 flex flex-col sm:flex-row gap-4">
+                    <input type="text" id="search-input" placeholder="Buscar por modelo..." class="flex-grow p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e] bg-gray-700 text-white">
+                    <select type="text" id="make-filter" class="p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e] bg-gray-700 text-white" disabled>
+                        <option value="Ford">Ford</option>
+                    </select>
+                    <select id="year-filter" class="p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e] bg-gray-700 text-white">
+                        <option value="">Todos los Años</option>
+                    </select>
+                </div>
+
+                <div id="vehicle-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+
+                <div class="text-center mt-12">
+                    <h3 class="text-2xl font-bold text-gray-100 mb-6">Estadísticas de Nuestro Inventario</h3>
+                    <p class="text-gray-300 mb-4">Un vistazo a la distribución de modelos de Ford Transit en nuestro inventario actual.</p>
+                    <div class="chart-container">
+                        <canvas id="makeDistributionChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <footer class="bg-gray-900 text-white py-6">
+        <section id="contacto" class="py-16 md:py-24 bg-[#ca6f1e] text-white">
             <div class="container mx-auto px-6 text-center">
-                <p>&copy; 2025 Miami Auto Credit, 3210 E 4th Ave, Hialeah, FL 33013. Preguntar por Greissy. Todos los derechos reservados.</p>
+                <h2 class="text-4xl font-bold mb-4">¿Listo para Tu Próxima Ford Transit?</h2>
+                <p class="text-[#f5e0d0] mb-8 max-w-2xl mx-auto">Contáctanos hoy mismo para más información, una prueba de manejo o para discutir opciones de financiación.</p>
+                <div class="bg-gray-900 text-gray-100 rounded-xl shadow-2xl p-8 max-w-4xl mx-auto grid md:grid-cols-2 gap-8 text-left">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Información de Contacto</h3>
+                        <div class="space-y-4">
+                            <p class="flex items-start">
+                                <span class="text-[#ca6f1e] mt-1 mr-3">📞</span>
+                                <span>
+                                    <strong class="block">Llámanos:</strong>
+                                    <a href="tel:+17868507699" class="hover:underline">786-850-7699</a>
+                                    <span class="block text-sm text-gray-300">Preguntar por Greissy</span>
+                                </span>
+                            </p>
+                            <p class="flex items-start">
+                                <span class="text-[#ca6f1e] mt-1 mr-3">📍</span>
+                                <span>
+                                    <strong class="block">Visítanos en:</strong>
+                                    Miami Auto Credit, 3210 E 4th Ave, Hialeah, FL 33013, Estados Unidos
+                                </span>
+                            </p>
+                            <p class="flex items-start">
+                                <span class="text-[#ca6f1e] mt-1 mr-3">✉️</span>
+                                <span>
+                                    <strong class="block">Envíanos un Email:</strong>
+                                    <a href="mailto:info@miamiautocredit.com" class="hover:underline">info@miamiautocredit.com</a>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="text-lg font-semibold mb-2">Horario de Atención:</h4>
+                            <p><strong>Lunes a Viernes:</strong> 9:00 AM - 7:00 PM</p>
+                            <p><strong>Sábado:</strong> 9:00 AM - 6:00 PM</p>
+                            <p><strong>Domingo:</strong> Cerrado</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-4">
+                         <a href="tel:+17868507699" class="w-full bg-[#ca6f1e] text-white text-center font-bold py-4 px-6 rounded-lg hover:bg-[#b0611a] transition duration-300">Llamar Ahora</a>
+                         <a href="mailto:info@miamiautocredit.com" class="w-full bg-gray-800 text-white text-center font-bold py-4 px-6 rounded-lg hover:bg-gray-900 transition duration-300">Enviar un Email</a>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Miami Auto Credit. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="vehicle-modal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-100 text-2xl font-bold">✖</button>
+            <h3 id="modal-title" class="text-3xl font-bold text-gray-100 mb-4"></h3>
+            <img id="modal-image" src="" alt="Vehicle Image" class="w-full h-64 object-cover rounded-lg mb-4">
+            <div class="grid grid-cols-2 gap-4 mb-4 text-gray-300">
+                <p><strong>Precio:</strong> <span id="modal-price"></span></p>
+                <p><strong>Año:</strong> <span id="modal-year"></span></p>
+                <p><strong>Millaje:</strong> <span id="modal-mileage"></span></p>
+                <p><strong>Tipo:</strong> <span id="modal-type"></span></p>
+            </div>
+            <p id="modal-description" class="text-gray-400 mb-6"></p>
+
+            <div class="mt-6 p-4 bg-[#3a4d5c] rounded-lg border border-[#4d6379]">
+                <h4 class="text-xl font-bold text-[#ca6f1e] mb-3">✨ Pregúntale a La Vansita ✨</h4>
+                <p class="text-gray-200 text-sm mb-3">¿Tienes alguna pregunta rápida sobre este vehículo? ¡Pregúntale a nuestro asistente virtual!</p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="gemini-question-input" placeholder="Ej: ¿Es buena para viajes largos?" class="flex-grow p-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ca6f1e] bg-gray-700 text-white">
+                    <button id="ask-gemini-button" class="bg-[#ca6f1e] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#b0611a] transition-colors duration-300 flex-shrink-0">
+                        Preguntar
+                    </button>
+                </div>
+                <div id="gemini-response" class="mt-4 p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-100 min-h-[60px] flex items-center justify-center text-center">
+                    <span class="text-gray-400">Tu respuesta aparecerá aquí...</span>
+                </div>
+                <div id="gemini-loading" class="hidden mt-4 text-center text-[#ca6f1e]">
+                    Cargando respuesta...
+                </div>
+            </div>
+            <a href="tel:+17868507699" class="block text-center bg-[#ca6f1e] text-white font-bold py-3 rounded-lg hover:bg-[#b0611a] transition duration-300 mt-6">¡Llámanos para más detalles!</a>
+        </div>
+    </div>
+
+    <script>
+        const vehicles = [
+            { id: 1, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2015, price: 16990, mileage: 185807, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Una Ford Transit 350 de techo alto extendida, ideal para entregas o conversiones. Muy espaciosa y fiable.' },
+            { id: 2, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2015, price: 10990, mileage: 186210, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Furgoneta Ford Transit 250 de techo medio, perfecta para el trabajo diario. Confiable y eficiente.' },
+            { id: 3, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2015, price: 17990, mileage: 181195, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Otra Ford Transit 350 de techo alto, ideal para cargas grandes y transporte.' },
+            { id: 4, make: 'Ford', model: 'Transit 250 Van Low Roof 60/40 Pass. 148-in. WB', year: 2016, price: 15990, mileage: 104214, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Furgoneta Ford Transit 250 de techo bajo, con puertas de paso 60/40. Eficiente y práctica.' },
+            { id: 5, make: 'Ford', model: 'Transit 250 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 15990, mileage: 100144, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 250 de techo bajo con puerta corredera, distancia entre ejes corta. Maniobrable y confiable.' },
+            { id: 6, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 18990, mileage: 104652, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 250 de techo medio con puerta corredera, ideal para una variedad de usos.' },
+            { id: 7, make: 'Ford', model: 'Transit 350 Van Low Roof 60/40 Pass. 148-in. WB', year: 2016, price: 9990, mileage: 170109, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 350 de techo bajo con puertas de paso 60/40. Capacidad de carga robusta.' },
+            { id: 8, make: 'Ford', model: 'Transit 150 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2016, price: 14990, mileage: 149115, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 150 de techo bajo con puerta corredera, compacta y fácil de conducir.' },
+            { id: 9, make: 'Ford', model: 'Transit 350 Wagon Low Roof XL w/Sliding Pass. 148-in. WB', year: 2016, price: 18990, mileage: 130312, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 350 Wagon, ideal para transporte de pasajeros o una combinación de carga y pasajeros.' },
+            { id: 10, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2016, price: 13990, mileage: 180532, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 250 de techo medio, una furgoneta confiable y espaciosa para diversas necesidades.' },
+            { id: 11, make: 'Ford', model: 'Transit 150 Van Low Roof 60/40 Pass. 130-in. WB', year: 2016, price: 12990, mileage: 150587, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Otra Ford Transit 150 de techo bajo, con fácil acceso gracias a las puertas 60/40.' },
+            { id: 12, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2017, price: 18990, mileage: 190235, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 350 de techo alto y distancia entre ejes extendida, máxima capacidad.' },
+            { id: 13, make: 'Ford', model: 'Transit 150 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2017, price: null, mileage: 148320, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 150 de techo medio con puerta corredera, un equilibrio perfecto entre tamaño y capacidad.' },
+            { id: 14, make: 'Ford', model: 'Transit 350 Van High Roof w/Sliding Pass. 148-in. WB EL', year: 2017, price: 22990, mileage: 133244, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Otra Ford Transit 350 de techo alto con menor millaje, lista para el trabajo pesado.' },
+            { id: 15, make: 'Ford', model: 'Transit 150 Van Low Roof w/Sliding Pass. 130-in. WB', year: 2017, price: 13990, mileage: 166062, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 150 de techo bajo con puerta corredera, compacta y eficiente para la ciudad.' },
+            { id: 16, make: 'Ford', model: 'Transit 350 Wagon Med. Roof XL w/Sliding Pass. 148-in. WB', year: 2017, price: 16990, mileage: 190164, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 350 Wagon de techo medio, con configuración XL para mayor espacio.' },
+            { id: 17, make: 'Ford', model: 'Transit 250 Van Low Roof 60/40 Pass.130-in. WB', year: 2017, price: 13990, mileage: 156200, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 250 de techo bajo con puertas 60/40, versátil y económica.' },
+            { id: 18, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 130-in. WB', year: 2017, price: 13990, mileage: 183062, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 250 de techo medio, una furgoneta de trabajo fiable con puerta corredera.' },
+            { id: 19, make: 'Ford', model: 'Transit 250 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 14990, mileage: 187461, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 250 de techo medio, modelo más reciente con buen rendimiento.' },
+            { id: 20, make: 'Ford', model: 'Transit 350 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 19990, mileage: 129626, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 350 de techo medio, con mayor capacidad y menor millaje para el año.' },
+            { id: 21, make: 'Ford', model: 'Transit 150 Van Med. Roof w/Sliding Pass. 148-in. WB', year: 2018, price: 18990, mileage: 127538, type: 'Van', imageUrl: 'https://raw.githubusercontent.com/lavansita/lavansita/main/vehiculo.png', description: 'Ford Transit 150 de techo medio, un vehículo comercial versátil y confiable.' }
+        ];
+
+        const vehicleGrid = document.getElementById('vehicle-grid');
+        const searchInput = document.getElementById('search-input');
+        const makeFilter = document.getElementById('make-filter');
+        const yearFilter = document.getElementById('year-filter');
+        const vehicleModal = document.getElementById('vehicle-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalImage = document.getElementById('modal-image');
+        const modalPrice = document.getElementById('modal-price');
+        const modalYear = document.getElementById('modal-year');
+        const modalMileage = document.getElementById('modal-mileage');
+        const modalType = document.getElementById('modal-type');
+        const modalDescription = document.getElementById('modal-description');
+        const geminiQuestionInput = document.getElementById('gemini-question-input');
+        const askGeminiButton = document.getElementById('ask-gemini-button');
+        const geminiResponseDiv = document.getElementById('gemini-response');
+        const geminiLoadingDiv = document.getElementById('gemini-loading');
+        let makeDistributionChart;
+        let currentVehicleForGemini = null;
+
+        function formatPrice(price) {
+            if (price === null || price === undefined) {
+                return 'Precio no disponible';
+            }
+            return new Intl.NumberFormat('es-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
+        }
+
+        function formatMileage(mileage) {
+            if (mileage === null || mileage === undefined) {
+                return 'Millaje no disponible';
+            }
+            return new Intl.NumberFormat('es-US').format(mileage) + ' millas';
+        }
+
+        function renderVehicles(filteredVehicles) {
+            vehicleGrid.innerHTML = '';
+            if (filteredVehicles.length === 0) {
+                vehicleGrid.innerHTML = '<p class="col-span-full text-center text-gray-400 text-lg">No se encontraron vehículos que coincidan con tu búsqueda.</p>';
+                return;
+            }
+            filteredVehicles.forEach(vehicle => {
+                const card = document.createElement('div');
+                card.className = 'vehicle-card bg-gray-700 rounded-lg shadow-md overflow-hidden cursor-pointer';
+                card.innerHTML = `
+                    <img src="${vehicle.imageUrl}" alt="${vehicle.make} ${vehicle.model}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-gray-100 mb-1">${vehicle.year} ${vehicle.make} ${vehicle.model}</h3>
+                        <p class="text-2xl font-bold text-[#ca6f1e] mb-2">${formatPrice(vehicle.price)}</p>
+                        <p class="text-gray-300 text-sm">${formatMileage(vehicle.mileage)}</p>
+                    </div>
+                `;
+                card.addEventListener('click', () => openVehicleModal(vehicle));
+                vehicleGrid.appendChild(card);
+            });
+        }
+
+        function openVehicleModal(vehicle) {
+            currentVehicleForGemini = vehicle;
+            modalTitle.textContent = `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
+            modalImage.src = vehicle.imageUrl;
+            modalPrice.textContent = formatPrice(vehicle.price);
+            modalYear.textContent = vehicle.year;
+            modalMileage.textContent = formatMileage(vehicle.mileage);
+            modalType.textContent = vehicle.type;
+            modalDescription.textContent = vehicle.description;
+            geminiQuestionInput.value = '';
+            geminiResponseDiv.innerHTML = '<span class="text-gray-400">Tu respuesta aparecerá aquí...</span>';
+            geminiLoadingDiv.classList.add('hidden');
+            vehicleModal.style.display = 'flex';
+        }
+
+        closeModalButton.addEventListener('click', () => {
+            vehicleModal.style.display = 'none';
+            currentVehicleForGemini = null;
+        });
+
+        vehicleModal.addEventListener('click', (e) => {
+            if (e.target === vehicleModal) {
+                vehicleModal.style.display = 'none';
+                currentVehicleForGemini = null;
+            }
+        });
+
+        async function askGeminiAboutVehicle() {
+            const question = geminiQuestionInput.value.trim();
+            if (!question || !currentVehicleForGemini) {
+                geminiResponseDiv.textContent = 'Por favor, introduce una pregunta y selecciona un vehículo.';
+                return;
+            }
+
+            geminiResponseDiv.textContent = '';
+            geminiLoadingDiv.classList.remove('hidden');
+            askGeminiButton.disabled = true;
+
+            const vehicle = currentVehicleForGemini;
+            const prompt = `Eres un asistente de ventas de vehículos amigable y conocedor de Miami Auto Credit. Basándote en la siguiente información del vehículo, responde a la pregunta del usuario. Si la pregunta no se puede responder directamente con la información proporcionada, da una respuesta útil y sugiere que el usuario se ponga en contacto con el concesionario para más detalles, mencionando el número de teléfono 786-850-7699.
+
+Información del Vehículo:
+Marca: ${vehicle.make}
+Modelo: ${vehicle.model}
+Año: ${vehicle.year}
+Precio: ${formatPrice(vehicle.price)}
+Kilometraje: ${formatMileage(vehicle.mileage)}
+Tipo: ${vehicle.type}
+Descripción: ${vehicle.description}
+
+Pregunta del Usuario:
+${question}
+
+Tu Respuesta:`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            // IMPORTANT: Replace with your actual API key
+            const apiKey = ""; // <--- Add your Gemini API key here
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    geminiResponseDiv.textContent = text;
+                } else {
+                    geminiResponseDiv.textContent = 'Lo siento, no pude generar una respuesta. Por favor, intenta de nuevo o contáctanos directamente.';
+                }
+            } catch (error) {
+                console.error('Error al llamar a la API de Gemini:', error);
+                geminiResponseDiv.textContent = 'Hubo un error al procesar tu solicitud. Por favor, intenta de nuevo más tarde.';
+            } finally {
+                geminiLoadingDiv.classList.add('hidden');
+                askGeminiButton.disabled = false;
+            }
+        }
+
+        askGeminiButton.addEventListener('click', askGeminiAboutVehicle);
+
+        function filterVehicles() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedYear = yearFilter.value;
+
+            const filtered = vehicles.filter(vehicle => {
+                const matchesSearch = vehicle.model.toLowerCase().includes(searchTerm);
+                const matchesYear = selectedYear === '' || vehicle.year.toString() === selectedYear;
+                return matchesSearch && matchesYear;
+            });
+            renderVehicles(filtered);
+            updateChart(filtered);
+        }
+
+        searchInput.addEventListener('input', filterVehicles);
+        makeFilter.addEventListener('change', filterVehicles); // This will be disabled, but for completeness
+        yearFilter.addEventListener('change', filterVehicles);
+
+        function populateFilters() {
+            // Since we only have Ford Transit, pre-select and disable the make filter
+            makeFilter.innerHTML = '<option value="Ford">Ford</option>';
+            makeFilter.value = 'Ford';
+            makeFilter.disabled = true;
+
+            const years = [...new Set(vehicles.map(v => v.year))].sort((a, b) => b - a);
+            yearFilter.innerHTML = '<option value="">Todos los Años</option>'; // Reset before populating
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearFilter.appendChild(option);
+            });
+        }
+
+        function createChart() {
+            const ctx = document.getElementById('makeDistributionChart').getContext('2d');
+            const modelCounts = {};
+            vehicles.forEach(vehicle => {
+                modelCounts[vehicle.model] = (modelCounts[vehicle.model] || 0) + 1;
+            });
+
+            const labels = Object.keys(modelCounts);
+            const data = Object.values(modelCounts);
+
+            makeDistributionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.map(label => {
+                        const words = label.split(' ');
+                        let wrappedLabel = '';
+                        let currentLine = '';
+                        words.forEach(word => {
+                            if ((currentLine + word).length > 16 && currentLine.length > 0) {
+                                wrappedLabel += currentLine + '\n';
+                                currentLine = word;
+                            } else {
+                                currentLine += (currentLine.length > 0 ? ' ' : '') + word;
+                            }
+                        });
+                        wrappedLabel += currentLine;
+                        return wrappedLabel;
+                    }),
+                    datasets: [{
+                        label: 'Número de Vehículos',
+                        data: data,
+                        backgroundColor: 'rgba(202, 111, 30, 0.6)', /* #ca6f1e con opacidad */
+                        borderColor: 'rgba(202, 111, 30, 1)', /* #ca6f1e sólido */
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    return context[0].label.replace(/\n/g, ' ');
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad'
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Modelo de Ford Transit'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChart(currentVehicles) {
+            if (makeDistributionChart) {
+                makeDistributionChart.destroy();
+            }
+            const modelCounts = {};
+            currentVehicles.forEach(vehicle => {
+                modelCounts[vehicle.model] = (modelCounts[vehicle.model] || 0) + 1;
+            });
+
+            const labels = Object.keys(modelCounts);
+            const data = Object.values(modelCounts);
+
+            const ctx = document.getElementById('makeDistributionChart').getContext('2d');
+            makeDistributionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.map(label => {
+                        const words = label.split(' ');
+                        let wrappedLabel = '';
+                        let currentLine = '';
+                        words.forEach(word => {
+                            if ((currentLine + word).length > 16 && currentLine.length > 0) {
+                                wrappedLabel += currentLine + '\n';
+                                currentLine = word;
+                            } else {
+                                currentLine += (currentLine.length > 0 ? ' ' : '') + word;
+                            }
+                        });
+                        wrappedLabel += currentLine;
+                        return wrappedLabel;
+                    }),
+                    datasets: [{
+                        label: 'Número de Vehículos',
+                        data: data,
+                        backgroundColor: 'rgba(202, 111, 30, 0.6)', /* #ca6f1e con opacidad */
+                        borderColor: 'rgba(202, 111, 30, 1)', /* #ca6f1e sólido */
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    return context[0].label.replace(/\n/g, ' ');
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad'
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Modelo de Ford Transit'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFilters();
+            renderVehicles(vehicles);
+            createChart();
+        });
+    </script>
 
 </body>
 </html>
